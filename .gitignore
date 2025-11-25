@@ -1,1 +1,4 @@
-pycache/ venv/ .env .DS_Store
+pycache/
+venv/
+.env
+.DS_Store

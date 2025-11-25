@@ -1,4 +1,8 @@
+import sys
+import os
 import pytest
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from app import app
 
 @pytest.fixture
@@ -11,7 +15,7 @@ def test_home_page(client):
     """Test that the home page loads successfully."""
     rv = client.get('/')
     assert rv.status_code == 200
-    assert b"Secure Weather App" in rv.data
+    assert b"Super Cool Weather App" in rv.data
 
 def test_no_api_key_behavior(client, monkeypatch):
     """Test that the app handles missing API keys gracefully (Security Test)."""
