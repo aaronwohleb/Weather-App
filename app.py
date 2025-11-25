@@ -20,7 +20,7 @@ def get_weather(city):
         data = response.json()
 
         if response.status_code == 200:
-            return = {
+            return {
                 "city": data["name"],
                 "temperature": data["main"]["temp"],
                 "description": data["weather"][0]["description"],
@@ -44,4 +44,4 @@ def home():
     return render_template('index.html', weather=weather_data)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) 
