@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Secure Weather</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; background-color: #f4f4f9; }
+        .container { background: white; padding: 30px; border-radius: 10px; display: inline-block; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input { padding: 10px; border-radius: 5px; border: 1px solid #ddd; }
+        button { padding: 10px 20px; background-color: #004d40; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background-color: #00332a; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Super Cool Weather App</h1>
+        <p>Enter a city to test the API connection:</p>
+        <form method="POST">
+            <input type="text" name="city" placeholder="e.g. Lincoln" required>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        {% if weather %}
+            <br>
+            {% if weather.error %}
+                <p class="error">{{ weather.error }}</p>
+            {% else %}
+                <h2>{{ weather.city }}</h2>
+                <h3>{{ weather.temp }}°F</h3>
+                <p>{{ weather.description }}</p>
+                <img src="http://openweathermap.org/img/wn/{{ weather.icon }}.png" alt="icon">
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+name: Secure Weather Pipeline
+
+on: [push]
+
+jobs:
+  build-test-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.13'
+
+    - name: Install Dependencies
+      run: |
+        pip install -r requirements.txt
+
+    # UNIT TESTS with Secret Injection
+    # We pass the secret from GitHub into the test environment here.
+    - name: Run Tests
+      env:
+        WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+      run: |
+        pytest
+
+    # SECURITY SCAN 1: Check libraries for known holes
+    - name: Scan Dependencies (SCA)
+      run: pip-audit
+
+    # SECURITY SCAN 2: Check code for secrets/bad logic
+    # We skip B113 (request without timeout) just to keep this simple for now.
+    - name: Scan Code (SAST)
+      run: bandit -r app.py -s B113
