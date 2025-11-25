@@ -22,7 +22,7 @@ def get_weather(city):
         if response.status_code == 200:
             return {
                 "city": data["name"],
-                "temperature": data["main"]["temp"],
+                "temp": data["main"]["temp"],
                 "description": data["weather"][0]["description"],
                 "icon": data["weather"][0]["icon"],
             }
